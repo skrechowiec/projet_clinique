@@ -1,0 +1,30 @@
+security:
+    firewalls:
+        main:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login
+            logout:
+                path: logout
+                target: App_homepage
+
+    providers:
+        main_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 10
+
+    access_control:
+        - { path: ^/gestion, roles: ROLE_GESTION}
+        - { path: ^/admin/, roles: ROLE_ADMIN}
+
+    role_hierarchy:
+        ROLE_GESTION: ROLE_USER
+        ROLE_ADMIN: ROLE_REDACTOR, ROLE_GESTION

@@ -1,0 +1,49 @@
+App\Entity\User:
+    type: entity
+
+    # clé primaire
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+
+    # colonnes de la table
+    fields:
+        username:
+            type: string
+            length: 255
+        isActivatedUser:
+            type: boolean
+            default: false
+        reinitialisedMdpUser:
+            type: boolean
+            default: false
+        email:
+            type: string
+            length: 255
+        createdAt:
+            type: datetime
+        updateAt:
+            type: datetime
+            nullable: true
+        password:
+            type: string
+            length: 255
+        roles:
+            type: string
+            length: 25
+        observationUser:
+            type: string
+            length: 255
+
+    # relations
+    manyToMany:
+        functionUsers:
+            targetEntity: FunctionUser
+            mappedBy: users
+
+    # création des événements
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ] # appelé à la création
+        preUpdate: [ setUpdateAtValue ] # appelé à la modification

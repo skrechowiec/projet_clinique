@@ -1,0 +1,146 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Fonction
+ *
+ * @ORM\Table(name="fonction")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FonctionRepository")
+ */
+class Fonction
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fonctionCourt", type="string", length=3)
+     */
+    private $fonctionCourt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fonctionLong", type="string", length=50)
+     */
+    private $fonctionLong;
+
+
+    /**
+     * @var ArrayCollection
+     *
+     * relation bidirectionnelle entre les fonctions et les utilisateurs
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="fonctions")
+     */
+    private $user;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set fonctionCourt
+     *
+     * @param string $fonctionCourt
+     *
+     * @return Fonction
+     */
+    public function setFonctionCourt($fonctionCourt)
+    {
+        $this->fonctionCourt = $fonctionCourt;
+
+        return $this;
+    }
+
+    /**
+     * Get fonctionCourt
+     *
+     * @return string
+     */
+    public function getFonctionCourt()
+    {
+        return $this->fonctionCourt;
+    }
+
+    /**
+     * Set fonctionLong
+     *
+     * @param string $fonctionLong
+     *
+     * @return Fonction
+     */
+    public function setFonctionLong($fonctionLong)
+    {
+        $this->fonctionLong = $fonctionLong;
+
+        return $this;
+    }
+
+    /**
+     * Get fonctionLong
+     *
+     * @return string
+     */
+    public function getFonctionLong()
+    {
+        return $this->fonctionLong;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Fonction
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+}

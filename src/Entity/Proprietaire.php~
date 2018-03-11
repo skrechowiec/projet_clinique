@@ -1,0 +1,328 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Proprietaire
+ *
+ * @ORM\Table(name="proprietaire")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProprietaireRepository")
+ */
+class Proprietaire
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomProprietaire", type="string", length=50)
+     */
+    private $nomProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenomProprietaire", type="string", length=50)
+     */
+    private $prenomProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="adresseProprietaire", type="string", length=255)
+     */
+    private $adresseProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telephoneProprietaire", type="string", length=10, nullable=true)
+     */
+    private $telephoneProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mobileProprietaire", type="string", length=10, nullable=true)
+     */
+    private $mobileProprietaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observationProprietaire", type="string", length=255, nullable=true)
+     */
+    private $observationProprietaire;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Animal", mappedBy="proprietaire")
+     */
+    protected $animal;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Ville")
+     */
+
+    protected $ville;
+
+    /**
+     *
+     * @ORM\OneToOne(targetEntity="User")
+     */
+    protected $user;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rendezVous = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nomProprietaire
+     *
+     * @param string $nomProprietaire
+     *
+     * @return Proprietaire
+     */
+    public function setNomProprietaire($nomProprietaire)
+    {
+        $this->nomProprietaire = $nomProprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Get nomProprietaire
+     *
+     * @return string
+     */
+    public function getNomProprietaire()
+    {
+        return $this->nomProprietaire;
+    }
+
+    /**
+     * Set prenomProprietaire
+     *
+     * @param string $prenomProprietaire
+     *
+     * @return Proprietaire
+     */
+    public function setPrenomProprietaire($prenomProprietaire)
+    {
+        $this->prenomProprietaire = $prenomProprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Get prenomProprietaire
+     *
+     * @return string
+     */
+    public function getPrenomProprietaire()
+    {
+        return $this->prenomProprietaire;
+    }
+
+    /**
+     * Set adresseProprietaire
+     *
+     * @param string $adresseProprietaire
+     *
+     * @return Proprietaire
+     */
+    public function setAdresseProprietaire($adresseProprietaire)
+    {
+        $this->adresseProprietaire = $adresseProprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Get adresseProprietaire
+     *
+     * @return string
+     */
+    public function getAdresseProprietaire()
+    {
+        return $this->adresseProprietaire;
+    }
+
+    /**
+     * Set telephoneProprietaire
+     *
+     * @param string $telephoneProprietaire
+     *
+     * @return Proprietaire
+     */
+    public function setTelephoneProprietaire($telephoneProprietaire)
+    {
+        $this->telephoneProprietaire = $telephoneProprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Get telephoneProprietaire
+     *
+     * @return string
+     */
+    public function getTelephoneProprietaire()
+    {
+        return $this->telephoneProprietaire;
+    }
+
+    /**
+     * Set mobileProprietaire
+     *
+     * @param string $mobileProprietaire
+     *
+     * @return Proprietaire
+     */
+    public function setMobileProprietaire($mobileProprietaire)
+    {
+        $this->mobileProprietaire = $mobileProprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Get mobileProprietaire
+     *
+     * @return string
+     */
+    public function getMobileProprietaire()
+    {
+        return $this->mobileProprietaire;
+    }
+
+    /**
+     * Set observationProprietaire
+     *
+     * @param string $observationProprietaire
+     *
+     * @return Proprietaire
+     */
+    public function setObservationProprietaire($observationProprietaire)
+    {
+        $this->observationProprietaire = $observationProprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Get observationProprietaire
+     *
+     * @return string
+     */
+    public function getObservationProprietaire()
+    {
+        return $this->observationProprietaire;
+    }
+
+    /**
+     * Add rendezVous
+     *
+     * @param \AppBundle\Entity\RendezVous $rendezVous
+     *
+     * @return Proprietaire
+     */
+    public function addRendezVous(\AppBundle\Entity\RendezVous $rendezVous)
+    {
+        $this->rendezVous[] = $rendezVous;
+
+        return $this;
+    }
+
+    /**
+     * Remove rendezVous
+     *
+     * @param \AppBundle\Entity\RendezVous $rendezVous
+     */
+    public function removeRendezVous(\AppBundle\Entity\RendezVous $rendezVous)
+    {
+        $this->rendezVous->removeElement($rendezVous);
+    }
+
+    /**
+     * Get rendezVous
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRendezVous()
+    {
+        return $this->rendezVous;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Proprietaire
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param \AppBundle\Entity\Ville $ville
+     *
+     * @return Proprietaire
+     */
+    public function setVille(\AppBundle\Entity\Ville $ville = null)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return \AppBundle\Entity\Ville
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+}

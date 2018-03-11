@@ -1,0 +1,99 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
+/**
+ * Espece
+ *
+ * @ORM\Table(name="espece")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EspeceRepository")
+ * @UniqueEntity("race,espece")
+ */
+class Espece
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="race", type="string", length=30)
+     */
+    private $race;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="espece", type="string", length=30)
+     */
+    private $espece;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set race
+     *
+     * @param string $race
+     *
+     * @return Espece
+     */
+    public function setRace($race)
+    {
+        $this->race = $race;
+
+        return $this;
+    }
+
+    /**
+     * Get race
+     *
+     * @return string
+     */
+    public function getRace()
+    {
+        return $this->race;
+    }
+
+    /**
+     * Set espece
+     *
+     * @param string $espece
+     *
+     * @return Espece
+     */
+    public function setEspece($espece)
+    {
+        $this->espece = $espece;
+
+        return $this;
+    }
+
+    /**
+     * Get espece
+     *
+     * @return string
+     */
+    public function getEspece()
+    {
+        return $this->espece;
+    }
+}

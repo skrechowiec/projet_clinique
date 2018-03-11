@@ -1,0 +1,246 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * RendezVous
+ *
+ * @ORM\Table(name="rendez_vous")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RendezVousRepository")
+ */
+class RendezVous
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateDeCreationRendezVous", type="datetimetz")
+     */
+    private $dateDeCreationRendezVous;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateDuRendezVous", type="datetimetz")
+     */
+    private $dateDuRendezVous;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observationRendezVous", type="string", length=255, nullable=true)
+     */
+    private $observationRendezVous;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="rendezVous")
+     */
+    private $user;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Proprietaire")
+     */
+    protected $proprietaire;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Acte", inversedBy="rendezVous")
+     */
+    private $actes;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set dateDeCreationRendezVous
+     *
+     * @param \DateTime $dateDeCreationRendezVous
+     *
+     * @return RendezVous
+     */
+    public function setDateDeCreationRendezVous($dateDeCreationRendezVous)
+    {
+        $this->dateDeCreationRendezVous = $dateDeCreationRendezVous;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeCreationRendezVous
+     *
+     * @return \DateTime
+     */
+    public function getDateDeCreationRendezVous()
+    {
+        return $this->dateDeCreationRendezVous;
+    }
+
+    /**
+     * Set dateDuRendezVous
+     *
+     * @param \DateTime $dateDuRendezVous
+     *
+     * @return RendezVous
+     */
+    public function setDateDuRendezVous($dateDuRendezVous)
+    {
+        $this->dateDuRendezVous = $dateDuRendezVous;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDuRendezVous
+     *
+     * @return \DateTime
+     */
+    public function getDateDuRendezVous()
+    {
+        return $this->dateDuRendezVous;
+    }
+
+    /**
+     * Set observationRendezVous
+     *
+     * @param string $observationRendezVous
+     *
+     * @return RendezVous
+     */
+    public function setObservationRendezVous($observationRendezVous)
+    {
+        $this->observationRendezVous = $observationRendezVous;
+
+        return $this;
+    }
+
+    /**
+     * Get observationRendezVous
+     *
+     * @return string
+     */
+    public function getObservationRendezVous()
+    {
+        return $this->observationRendezVous;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->actes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return RendezVous
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->user[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->user->removeElement($user);
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set proprietaire
+     *
+     * @param \AppBundle\Entity\Proprietaire $proprietaire
+     *
+     * @return RendezVous
+     */
+    public function setProprietaire(\AppBundle\Entity\Proprietaire $proprietaire = null)
+    {
+        $this->proprietaire = $proprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Get proprietaire
+     *
+     * @return \AppBundle\Entity\Proprietaire
+     */
+    public function getProprietaire()
+    {
+        return $this->proprietaire;
+    }
+
+     /**
+     * Add acte
+     *
+     * @param \AppBundle\Entity\Acte $acte
+     *
+     * @return RendezVous
+     */
+    public function addActe(\AppBundle\Entity\Acte $acte)
+    {
+        $this->actes[] = $acte;
+
+        return $this;
+    }
+
+    /**
+     * Remove acte
+     *
+     * @param \AppBundle\Entity\Acte $acte
+     */
+    public function removeActe(\AppBundle\Entity\Acte $acte)
+    {
+        $this->actes->removeElement($acte);
+    }
+
+    /**
+     * Get actes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActes()
+    {
+        return $this->actes;
+    }
+}

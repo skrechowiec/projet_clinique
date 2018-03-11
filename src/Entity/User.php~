@@ -1,0 +1,416 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+
+/**
+ * User
+ *
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ */
+class User implements UserInterface
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @Assert\Length(
+     *      min = "6",
+     *      minMessage = "Le nom doit faire au moins {{ limit }} caractères."
+     * )
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(name="estActifUser", type="boolean")
+     */
+    private $estActifUser;
+
+    /**
+     * @ORM\Column(name="reinitialiseMdPUser", type="string",length=1)
+     */
+    private $reinitialiseMdPUser;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\Email( message="Le format de l'email est incorrect")
+     * */
+    private $email;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateDeCreationUser", type="datetimetz")
+     */
+    private $dateDeCreationUser;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     * @Assert\Length(
+     *      min = "6",
+     *      minMessage = "Le mot de passe doit faire au moins {{ limit }} caractères."
+     * )*/
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="roles", type="string", length=25)
+     */
+    private $roles;
+
+     /**
+     * @var ArrayCollection
+     *
+     * relation bidirectionnelle entre les rendezVous et les usersVeto
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RendezVous", mappedBy="user")
+     */
+    private $rendezVous;
+
+    /**
+     * @var ArrayCollection
+     *
+     * relation bidirectionnelle entre les rendezVous et les usersVeto
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Fonction", inversedBy="user")
+     */
+    private $fonctions;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observationUser", type="string", length=255, nullable=true)
+     */
+    private $observationUser;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="creationUser", type="string", length=1)
+     */
+    private $creationUser;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param string $roles
+     *
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return string
+     */
+    public function getRoles()
+    {
+        return [$this->roles];
+    }
+
+    public function getSalt(){}
+
+    public function eraseCredentials(){}
+
+    /**
+     * Set estActifUser
+     *
+     * @param boolean $estActifUser
+     *
+     * @return User
+     */
+    public function setEstActifUser($estActifUser)
+    {
+        $this->estActifUser = $estActifUser;
+
+        return $this;
+    }
+
+    /**
+     * Get estActifUser
+     *
+     * @return boolean
+     */
+    public function getEstActifUser()
+    {
+        return $this->estActifUser;
+    }
+
+    /**
+     * Set reinitialiseMdPUser
+     *
+     * @param string $reinitialiseMdPUser
+     *
+     * @return User
+     */
+    public function setReinitialiseMdPUser($reinitialiseMdPUser)
+    {
+        $this->reinitialiseMdPUser = $reinitialiseMdPUser;
+
+        return $this;
+    }
+
+    /**
+     * Get reinitialiseMdPUser
+     *
+     * @return string
+     */
+    public function getReinitialiseMdPUser()
+    {
+        return $this->reinitialiseMdPUser;
+    }
+
+    /**
+     * Set dateDeCreationUser
+     *
+     * @param \DateTime $dateDeCreationUser
+     *
+     * @return User
+     */
+    public function setDateDeCreationUser($dateDeCreationUser)
+    {
+        $this->dateDeCreationUser = $dateDeCreationUser;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDeCreationUser
+     *
+     * @return \DateTime
+     */
+    public function getDateDeCreationUser()
+    {
+        return $this->dateDeCreationUser;
+    }
+
+    /**
+     * Set observationUser
+     *
+     * @param string $observationUser
+     *
+     * @return User
+     */
+    public function setObservationUser($observationUser)
+    {
+        $this->observationUser = $observationUser;
+
+        return $this;
+    }
+
+    /**
+     * Get observationUser
+     *
+     * @return string
+     */
+    public function getObservationUser()
+    {
+        return $this->observationUser;
+    }
+
+    /**
+     * Set creationUser
+     *
+     * @param string $creationUser
+     *
+     * @return User
+     */
+    public function setCreationUser($creationUser)
+    {
+        $this->creationUser = $creationUser;
+
+        return $this;
+    }
+
+    /**
+     * Get creationUser
+     *
+     * @return string
+     */
+    public function getCreationUser()
+    {
+        return $this->creationUser;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fonctions = new \Doctrine\Common\Collections\ArrayCollection();
+
+    }
+
+    /**
+     * Add fonction
+     *
+     * @param \AppBundle\Entity\Fonction $fonction
+     *
+     * @return User
+     */
+    public function addFonction(\AppBundle\Entity\Fonction $fonction)
+    {
+        $this->fonctions[] = $fonction;
+
+        return $this;
+    }
+
+    /**
+     * Remove fonction
+     *
+     * @param \AppBundle\Entity\Fonction $fonction
+     */
+    public function removeFonction(\AppBundle\Entity\Fonction $fonction)
+    {
+        $this->fonctions->removeElement($fonction);
+    }
+
+    /**
+     * Get fonctions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFonctions()
+    {
+        return $this->fonctions;
+    }
+
+    /**
+     * Add rendezVous
+     *
+     * @param \AppBundle\Entity\RendezVous $rendezVous
+     *
+     * @return User
+     */
+    public function addRendezVous(\AppBundle\Entity\RendezVous $rendezVous)
+    {
+        $this->rendezVous[] = $rendezVous;
+
+        return $this;
+    }
+
+    /**
+     * Remove rendezVous
+     *
+     * @param \AppBundle\Entity\RendezVous $rendezVous
+     */
+    public function removeRendezVous(\AppBundle\Entity\RendezVous $rendezVous)
+    {
+        $this->rendezVous->removeElement($rendezVous);
+    }
+
+    /**
+     * Get rendezVous
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRendezVous()
+    {
+        return $this->rendezVous;
+    }
+}

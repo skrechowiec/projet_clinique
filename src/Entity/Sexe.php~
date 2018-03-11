@@ -1,0 +1,217 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use DoctrineCommonCollectionsArrayCollection;
+
+
+/**
+ * Sexe
+ *
+ * @ORM\Table(name="sexe")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SexeRepository")
+ */
+class Sexe
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sexeCourt", type="string", length=5)
+     */
+    private $sexeCourt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sexeLong", type="string", length=25)
+     */
+    private $sexeLong;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="espece", type="string", length=25)
+     */
+    private $espece;
+
+    /**
+    *
+    * @ORM\OneToMany(targetEntity="User", mappedBy="sexe")
+    */
+    protected $users;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Animal", mappedBy="sexe")
+     */
+    protected $animals;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->animals = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set sexeCourt
+     *
+     * @param string $sexeCourt
+     *
+     * @return Sexe
+     */
+    public function setSexeCourt($sexeCourt)
+    {
+        $this->sexeCourt = $sexeCourt;
+
+        return $this;
+    }
+
+    /**
+     * Get sexeCourt
+     *
+     * @return string
+     */
+    public function getSexeCourt()
+    {
+        return $this->sexeCourt;
+    }
+
+    /**
+     * Set sexeLong
+     *
+     * @param string $sexeLong
+     *
+     * @return Sexe
+     */
+    public function setSexeLong($sexeLong)
+    {
+        $this->sexeLong = $sexeLong;
+
+        return $this;
+    }
+
+    /**
+     * Get sexeLong
+     *
+     * @return string
+     */
+    public function getSexeLong()
+    {
+        return $this->sexeLong;
+    }
+
+    /**
+     * Set espece
+     *
+     * @param string $espece
+     *
+     * @return Sexe
+     */
+    public function setEspece($espece)
+    {
+        $this->espece = $espece;
+
+        return $this;
+    }
+
+    /**
+     * Get espece
+     *
+     * @return string
+     */
+    public function getEspece()
+    {
+        return $this->espece;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Sexe
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Add animal
+     *
+     * @param \AppBundle\Entity\Animal $animal
+     *
+     * @return Sexe
+     */
+    public function addAnimal(\AppBundle\Entity\Animal $animal)
+    {
+        $this->animals[] = $animal;
+
+        return $this;
+    }
+
+    /**
+     * Remove animal
+     *
+     * @param \AppBundle\Entity\Animal $animal
+     */
+    public function removeAnimal(\AppBundle\Entity\Animal $animal)
+    {
+        $this->animals->removeElement($animal);
+    }
+
+    /**
+     * Get animals
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAnimals()
+    {
+        return $this->animals;
+    }
+}

@@ -1,0 +1,212 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Acte
+ *
+ * @ORM\Table(name="acte")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ActeRepository")
+ */
+class Acte
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomActe", type="string", length=50)
+     */
+    private $nomActe;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prixActe", type="decimal", precision=2, scale=0)
+     */
+    private $prixActe;
+
+    /**
+     * @var \int
+     *
+     * @ORM\Column(name="dureeActe", type="integer")
+     */
+    private $dureeActe;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observationActe", type="string", length=255, nullable= true)
+     */
+    private $observationActe;
+
+    /**
+     * @var ArrayCollection
+     *
+     * relation bidirectionnelle entre les actes et les rendez-vous
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RendezVous", mappedBy="actes")
+     */
+    private $rendezVous;
+
+    public function getActeEtPrixEtDuree()
+    {
+        return 'Acte : '.$this->nomActe.' / Prix : '.$this->prixActe.' / durée : '.$this->getDureeActe();
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rendezVous = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nomActe
+     *
+     * @param string $nomActe
+     *
+     * @return Acte
+     */
+    public function setNomActe($nomActe)
+    {
+        $this->nomActe = $nomActe;
+
+        return $this;
+    }
+
+    /**
+     * Get nomActe
+     *
+     * @return string
+     */
+    public function getNomActe()
+    {
+        return $this->nomActe;
+    }
+
+    /**
+     * Set prixActe
+     *
+     * @param string $prixActe
+     *
+     * @return Acte
+     */
+    public function setPrixActe($prixActe)
+    {
+        $this->prixActe = $prixActe;
+
+        return $this;
+    }
+
+    /**
+     * Get prixActe
+     *
+     * @return string
+     */
+    public function getPrixActe()
+    {
+        return $this->prixActe;
+    }
+
+    /**
+     * Set dureeActe
+     *
+     * @param integer $dureeActe
+     *
+     * @return Acte
+     */
+    public function setDureeActe($dureeActe)
+    {
+        $this->dureeActe = $dureeActe;
+
+        return $this;
+    }
+
+    /**
+     * Get dureeActe
+     *
+     * @return integer
+     */
+    public function getDureeActe()
+    {
+        return $this->dureeActe;
+    }
+
+    /**
+     * Set observationActe
+     *
+     * @param string $observationActe
+     *
+     * @return Acte
+     */
+    public function setObservationActe($observationActe)
+    {
+        $this->observationActe = $observationActe;
+
+        return $this;
+    }
+
+    /**
+     * Get observationActe
+     *
+     * @return string
+     */
+    public function getObservationActe()
+    {
+        return $this->observationActe;
+    }
+
+    /**
+     * Add rendezVous
+     *
+     * @param \AppBundle\Entity\RendezVous $rendezVous
+     *
+     * @return Acte
+     */
+    public function addRendezVous(\AppBundle\Entity\RendezVous $rendezVous)
+    {
+        $this->rendezVous[] = $rendezVous;
+
+        return $this;
+    }
+
+    /**
+     * Remove rendezVous
+     *
+     * @param \AppBundle\Entity\RendezVous $rendezVous
+     */
+    public function removeRendezVous(\AppBundle\Entity\RendezVous $rendezVous)
+    {
+        $this->rendezVous->removeElement($rendezVous);
+    }
+
+    /**
+     * Get rendezVous
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRendezVous()
+    {
+        return $this->rendezVous;
+    }
+}

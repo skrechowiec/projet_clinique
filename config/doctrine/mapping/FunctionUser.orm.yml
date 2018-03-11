@@ -1,0 +1,24 @@
+App\Entity\FunctionUser:
+    type: entity
+
+    # clé primaire
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+
+    # colonnes de la table
+    fields:
+        functionCourt:
+            type: string
+            length: 3
+        functionLong:
+            type: string
+            length: 50
+
+    # relations
+    manyToMany:
+        users:
+            targetEntity: User
+            inversedBy: functionUsers

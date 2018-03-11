@@ -1,0 +1,297 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Animal
+ *
+ * @ORM\Table(name="animal")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AnimalRepository")
+ */
+class Animal
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomAnimal", type="string", length=50)
+     */
+    private $nomAnimal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="couleurAnimal", type="string", length=25)
+     */
+    private $couleurAnimal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observationAnimal", type="string", length=255, nullable=true)
+     */
+    private $observationAnimal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="identificationAnimal", type="string", length=50, nullable=true)
+     */
+    private $identificationAnimal;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Espece")
+     */
+    protected $espece;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Proprietaire")
+     */
+    protected $proprietaire;
+
+    /**
+     *
+     * @ORM\ManyToOne(targetEntity="Sexe")
+     */
+    protected $sexe;
+
+    /**
+     * @var ArrayCollection
+     *
+     * relation bidirectionnelle entre les animaux et les rendezvous
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RendezVous", mappedBy="animals")
+     */
+    private $rendezVous;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rendezVous = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nomAnimal
+     *
+     * @param string $nomAnimal
+     *
+     * @return Animal
+     */
+    public function setNomAnimal($nomAnimal)
+    {
+        $this->nomAnimal = $nomAnimal;
+
+        return $this;
+    }
+
+    /**
+     * Get nomAnimal
+     *
+     * @return string
+     */
+    public function getNomAnimal()
+    {
+        return $this->nomAnimal;
+    }
+
+    /**
+     * Set couleurAnimal
+     *
+     * @param string $couleurAnimal
+     *
+     * @return Animal
+     */
+    public function setCouleurAnimal($couleurAnimal)
+    {
+        $this->couleurAnimal = $couleurAnimal;
+
+        return $this;
+    }
+
+    /**
+     * Get couleurAnimal
+     *
+     * @return string
+     */
+    public function getCouleurAnimal()
+    {
+        return $this->couleurAnimal;
+    }
+
+    /**
+     * Set observationAnimal
+     *
+     * @param string $observationAnimal
+     *
+     * @return Animal
+     */
+    public function setObservationAnimal($observationAnimal)
+    {
+        $this->observationAnimal = $observationAnimal;
+
+        return $this;
+    }
+
+    /**
+     * Get observationAnimal
+     *
+     * @return string
+     */
+    public function getObservationAnimal()
+    {
+        return $this->observationAnimal;
+    }
+
+    /**
+     * Set identificationAnimal
+     *
+     * @param string $identificationAnimal
+     *
+     * @return Animal
+     */
+    public function setIdentificationAnimal($identificationAnimal)
+    {
+        $this->identificationAnimal = $identificationAnimal;
+
+        return $this;
+    }
+
+    /**
+     * Get identificationAnimal
+     *
+     * @return string
+     */
+    public function getIdentificationAnimal()
+    {
+        return $this->identificationAnimal;
+    }
+
+    /**
+     * Add rendezVous
+     *
+     * @param \AppBundle\Entity\RendezVous $rendezVous
+     *
+     * @return Animal
+     */
+    public function addRendezVous(\AppBundle\Entity\RendezVous $rendezVous)
+    {
+        $this->rendezVous[] = $rendezVous;
+
+        return $this;
+    }
+
+    /**
+     * Remove rendezVous
+     *
+     * @param \AppBundle\Entity\RendezVous $rendezVous
+     */
+    public function removeRendezVous(\AppBundle\Entity\RendezVous $rendezVous)
+    {
+        $this->rendezVous->removeElement($rendezVous);
+    }
+
+    /**
+     * Get rendezVous
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRendezVous()
+    {
+        return $this->rendezVous;
+    }
+
+    /**
+     * Set espece
+     *
+     * @param \AppBundle\Entity\Espece $espece
+     *
+     * @return Animal
+     */
+    public function setEspece(\AppBundle\Entity\Espece $espece = null)
+    {
+        $this->espece = $espece;
+
+        return $this;
+    }
+
+    /**
+     * Get espece
+     *
+     * @return \AppBundle\Entity\Espece
+     */
+    public function getEspece()
+    {
+        return $this->espece;
+    }
+
+    /**
+     * Set proprietaire
+     *
+     * @param \AppBundle\Entity\Proprietaire $proprietaire
+     *
+     * @return Animal
+     */
+    public function setProprietaire(\AppBundle\Entity\Proprietaire $proprietaire = null)
+    {
+        $this->proprietaire = $proprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Get proprietaire
+     *
+     * @return \AppBundle\Entity\Proprietaire
+     */
+    public function getProprietaire()
+    {
+        return $this->proprietaire;
+    }
+
+    /**
+     * Set sexe
+     *
+     * @param \AppBundle\Entity\Sexe $sexe
+     *
+     * @return Animal
+     */
+    public function setSexe(\AppBundle\Entity\Sexe $sexe = null)
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * Get sexe
+     *
+     * @return \AppBundle\Entity\Sexe
+     */
+    public function getSexe()
+    {
+        return $this->sexe;
+    }
+}

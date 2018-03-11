@@ -1,0 +1,145 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ville
+ *
+ * @ORM\Table(name="ville")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VilleRepository")
+ */
+class Ville
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codePostal", type="string", length=5, unique=true)
+     */
+    private $codePostal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomVille", type="string", length=25)
+     */
+    private $nomVille;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="Proprietaire", mappedBy="ville")
+     */
+
+    protected $proprietaire;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set codePostal
+     *
+     * @param string $codePostal
+     *
+     * @return Ville
+     */
+    public function setCodePostal($codePostal)
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    /**
+     * Get codePostal
+     *
+     * @return string
+     */
+    public function getCodePostal()
+    {
+        return $this->codePostal;
+    }
+
+    /**
+     * Set nomVille
+     *
+     * @param string $nomVille
+     *
+     * @return Ville
+     */
+    public function setNomVille($nomVille)
+    {
+        $this->nomVille = $nomVille;
+
+        return $this;
+    }
+
+    /**
+     * Get nomVille
+     *
+     * @return string
+     */
+    public function getNomVille()
+    {
+        return $this->nomVille;
+    }
+
+ 
+    /**
+     * Add proprietaire
+     *
+     * @param \AppBundle\Entity\Proprietaire $proprietaire
+     *
+     * @return Ville
+     */
+    public function addProprietaire(\AppBundle\Entity\Proprietaire $proprietaire)
+    {
+        $this->proprietaire[] = $proprietaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove proprietaire
+     *
+     * @param \AppBundle\Entity\Proprietaire $proprietaire
+     */
+    public function removeProprietaire(\AppBundle\Entity\Proprietaire $proprietaire)
+    {
+        $this->proprietaire->removeElement($proprietaire);
+    }
+
+    /**
+     * Get proprietaire
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProprietaire()
+    {
+        return $this->proprietaire;
+    }
+}

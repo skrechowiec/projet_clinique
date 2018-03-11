@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style3.css') }}">
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <title>{% block title %}Clinique Vétérinaire{% endblock %}</title>
+    {% block script %}{% endblock %}
+</head>
+<body>
+<header>
+    <ul id="nav_menu">
+        <a href="{{ path('App_homepage') }}"><img src="{{ asset('media/logo.png' ) }}" alt="veterinaire" width='64' height='64' /></a>
+        <li><a href="{{ path('App_homepage') }}"><button type="button" class="btn btn-primary btn-xs">Accueil</button></a></li>
+        <li><a href="{{ path('services') }}"><button type="button" class="btn btn-primary btn-xs">Services</button></a></li>
+        <li><a href="{{ path('aPropos') }}"><button type="button" class="btn btn-primary btn-xs">A propos</button></a></li>
+        <li><a href="{{ path('nousContacter') }}"><button type="button" class="btn btn-primary btn-xs">Nous contacter</button></a></li>
+        {% if app.user %}
+            <li><a href="{{ path('logout') }}"><button type="button" class="btn btn-primary btn-xs">Se déconnecter</button></a></li>
+            <li><a href="{{ path('user_edit', {'user': app.user.id}) }}"><button type="button" class="btn btn-primary btn-xs">Modifier son profil</button></a></li>
+            <li><a href="{{ path('modifierMdP', {'user': app.user.id}) }}"><button type="button" class="btn btn-primary btn-xs">Modifier mot de passe</button></a></li>
+        {% else %}
+            <li><a href="{{ path('login') }}"><button type="button" class="btn btn-primary btn-xs">Se connecter</button></a></li>
+        {% endif %}
+    </ul>
+</header>
+<h2>{{ block('title') }}</h2>
+<div id= "page">
+    <div id="header">
+        <ul class="nav nav-pills">
+            {% if is_granted('ROLE_USER') %}
+                {% for fonction in app.user.fonctions  %}
+                    {% if fonction.fonctionCourt == "Adm" %}
+                        <ul class="nav nav-pills">
+                            <div class="btn btn-warning btn-sm">
+                                <li><a href="{{ path('userListe', {'actif': 1}) }}">Utilisateur Actif</a></li>
+                            </div>
+                            <div class="btn btn-warning btn-sm">
+                                <li><a href="{{ path('userListe', {'actif': 0}) }}">Utilisateur Archivé</a></li>
+                            </div>
+                        </ul>
+                    {% endif %}
+                    {% if fonction.fonctionCourt == "Sec" or fonction.fonctionCourt == "Vet" %}
+                        <ul class="nav nav-pills">
+                            <div class="btn btn-info btn-sm">
+                                <a href="{{ path('planning') }}">visualier le planning</a>
+                            </div>
+                            <div  class="btn btn-warning btn-sm">
+                                <a href="#">Commander des articles</a>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Rendez-vous<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('rendezVousCreated') }}">créer un rendez-vous</a></li>
+                                    <li><a href="{{ path('rendezVousListe') }}">visualier les rendez-vous</a></li>
+                                    <li><a href="{{ path('listePourRendezVous') }}">visualier les rendez-vous du jour</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Les actes<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('acte_created') }}">créer un acte</a></li>
+                                    <li><a href="{{ path('acte_listed', {'est': 1}) }}">lister les actes médicaux</a></li>
+                                    <li><a href="{{ path('acte_listed', {'est': 0}) }}">lister les actes non médicaux</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown">
+                                    Les propriétaire<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('proprietaireCreated') }}">créer un propriétaire</a></li>
+                                    <li><a href="{{ path('proprietaireListe', {'archive': 0}) }}">listes des propriétaire actifs</a></li>
+                                    <li><a href="{{ path('proprietaireListe', {'archive': 1})  }}">listes des propriétaire archivés</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning btn-sm  dropdown-toggle" data-toggle="dropdown">
+                                    Les animaux<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('animalCreated') }}">créer un animal</a></li>
+                                    <li><a href="{{ path('animalListe') }}">listes des animaux</a></li>
+                                    <li><a href="{{ path('animalSelection') }}">listes des animaux selon proprietaire</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-warning btn-sm  dropdown-toggle" data-toggle="dropdown">
+                                    Le chenil<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('emplacementCreated') }}">créer un emplacement</a></li>
+                                    <li><a href="{{ path('emplacementListe') }}">listes des emplacement</a></li>
+                                    <li><a href="{{ path('reservationCreated') }}">créer une réservation</a></li>
+                                    <li><a href="{{ path('reservationListe') }}">listes des réservations</a></li>
+                                </ul>
+                            </div>
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+    <div id="container">
+        {%  block body %}
+        {% endblock %}
+    </div>
+</div>
+<div id="formulaire">
+    {% block formulaire %}
+    {% endblock %}
+</div>
+<footer class="pied">
+    Copyrigth Kcc 2018 version 4
+</footer>
+</body>
+</html>

@@ -1,12 +1,45 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style3.css') }}">
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <title>{% block title %}Clinique Vétérinaire{% endblock %}</title>
+    {% block script %}{% endblock %}
+</head>
+<body>
+<div class="container">
+    <header>
+        <img src="{{asset('media/cliniqueVeterinaire.jpg')}}" alt="" />
+        <ul id="nav_menu">
+            <li><a href="{{ path('App_homepage') }}"><button type="button" class="btn btn-primary btn-xs">Accueil</button></a></li>
+            <li><a href="{{ path('services') }}"><button type="button" class="btn btn-primary btn-xs">Services</button></a></li>
+            <li><a href="{{ path('aPropos') }}"><button type="button" class="btn btn-primary btn-xs">A propos</button></a></li>
+            <li><a href="{{ path('nousContacter') }}"><button type="button" class="btn btn-primary btn-xs">Nous contacter</button></a></li>
+            <li><a href="{{ path('login') }}"><button type="button" class="btn btn-primary btn-xs">Se connecter</button></a></li>
+        </ul>
+    </header>
+    {% for label, messages in app.flashes %}
+        <div class="alert alert-{{ label }}">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endfor %}
+    {% block body %}
+    {% endblock %}
+    {% if app.user and app.user.reinitialiseMdPUser == "1" %}
+        <h2>Vous devez modifier votre mot de passe</h2>
+        <a class="btn btn-default btn-sm" href="{{ path('modifierMdP', {'user': app.user.id}) }}"><span class="glyphicon glyphicon-edit">Modifier mot de passe</span> </a>
+    {% endif %}
+    <footer class="pied">
+        Copyrigth Kcc 2018 version 4
+    </footer>
+</div>
+</body>
 </html>
